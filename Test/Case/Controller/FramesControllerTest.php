@@ -11,6 +11,15 @@
 
 App::uses('FramesController', 'Frames.Controller');
 
+class TestPluginController extends FramesController {
+	public $autoRender = false;
+	public function index($id = null) {
+		var_dump(123);
+		echo $id;
+		return true;
+	}
+}
+
 /**
  * Summary for FramesController Test Case
  */
@@ -49,21 +58,12 @@ class FramesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
-		$this->generate('Frames.Frames', array('methods' => array('_getViewObject')));
-
-		$mockView = $this->getMock('View', array('requestAction'), array($this->controller));
-		$mockView->view = 'index';
-		$mockView->plugin = 'Frames';
-		$mockView->expects($this->once())
-			->method('requestAction')
-			->with($this->equalTo('test_plugin/test_plugin/1'))
+		$mockTestAction = $this->getMock('TestPluginController', array('index'));
+		$mockTestAction
+			->expects($this->once())
+			->method('index')
+			->with($this->equalTo('1'))
 			->will($this->returnValue(true));
-
-		$this->controller
-			->expects($this->any())
-			->method('_getViewObject')
-			//->with($this->equalTo($this->controller))
-			->will($this->returnValue($mockView));
 
 		$this->testAction('/frames/frames/index/1', array('return' => 'view'));
 		//$this->assertEmpty($this->view);
