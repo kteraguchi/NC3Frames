@@ -11,13 +11,23 @@
 
 App::uses('FramesController', 'Frames.Controller');
 
+/**
+ * Plugin controller class for testAction
+ */
 class TestPluginController extends FramesController {
+
 	public $autoRender = false;
+
+/**
+ * index action
+ * 
+ * @param string $id frameId
+ * @return string
+ */
 	public function index($id = null) {
-		var_dump(123);
-		echo $id;
-		return true;
+		return 'TestPluginController_index_' . $id;
 	}
+
 }
 
 /**
@@ -53,20 +63,25 @@ class FramesControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * Frame ID 1 assertions
+ *
+ * @return void
+ */
+	private function __frameId1Assertion() {
+		$this->assertTextContains('<div id="frame-wrap-1" class="frame frame-id-1">', $this->view);
+		$this->assertTextContains('<div class="block block-id-5">', $this->view);
+		$this->assertTextContains('TestPluginController_index_1', $this->view);
+		$this->assertTextContains('Test frame name 1', $this->view);
+	}
+
+/**
  * testIndex method
  *
  * @return void
  */
 	public function testIndex() {
-		$mockTestAction = $this->getMock('TestPluginController', array('index'));
-		$mockTestAction
-			->expects($this->once())
-			->method('index')
-			->with($this->equalTo('1'))
-			->will($this->returnValue(true));
-
 		$this->testAction('/frames/frames/index/1', array('return' => 'view'));
-		//$this->assertEmpty($this->view);
+		$this->__frameId1Assertion();
 	}
 
 /**
@@ -80,6 +95,16 @@ class FramesControllerTest extends ControllerTestCase {
 	}
 
 /**
+ * testIndexNoneContent method
+ *
+ * @return void
+ */
+	public function testIndexNoneContent() {
+		$this->testAction('/frames/frames/index/2', array('return' => 'view'));
+		$this->assertEmpty($this->view);
+	}
+
+/**
  * testIndexSettingMode method
  *
  * @return void
@@ -87,7 +112,21 @@ class FramesControllerTest extends ControllerTestCase {
 	public function testIndexSettingMode() {
 		Configure::write('Pages.isSetting', true);
 		$this->testAction('/frames/frames/index/1', array('return' => 'view'));
-		$this->assertTextContains('<div class="block block-id-', $this->view);
+		$this->__frameId1Assertion();
+	}
+
+/**
+ * testIndexSettingMode method
+ *
+ * @return void
+ */
+	public function testIndexSettingModeNoneContent() {
+		Configure::write('Pages.isSetting', true);
+		$this->testAction('/frames/frames/index/2', array('return' => 'view'));
+		$this->assertTextContains('<div id="frame-wrap-2" class="frame frame-id-2">', $this->view);
+		$this->assertTextContains('<div class="block block-id-2">', $this->view);
+		$this->assertTextContains('Test frame name 2', $this->view);
+		$this->assertTextNotContains('TestPluginController_index_', $this->view);
 	}
 
 /**

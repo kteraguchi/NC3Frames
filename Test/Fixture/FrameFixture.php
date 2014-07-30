@@ -32,7 +32,7 @@ class FrameFixture extends CakeTestFixture {
 			'room_id' => 1,
 			'box_id' => 1,
 			'plugin_id' => 1,
-			'block_id' => 1,
+			'block_id' => 5,
 			'weight' => 1,
 			'is_published' => 1,
 			'from' => '2014-07-25 08:10:53',

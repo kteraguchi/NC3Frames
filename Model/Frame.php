@@ -92,7 +92,7 @@ class Frame extends FramesAppModel {
 			),
 			'Plugin'
 		);
-	
+
 		return $query;
 	}
 

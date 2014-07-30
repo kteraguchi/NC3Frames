@@ -85,4 +85,5 @@ class FramesController extends FramesAppController {
 		$this->autoRender = false;
 		$this->redirect('/setting/');
 	}
+
 }

@@ -2,9 +2,11 @@
 /**
  * FramesLanguageFixture
  *
-* @author   Jun Nishikawa <topaz2@m0n0m0n0.com>
-* @link     http://www.netcommons.org NetCommons Project
-* @license  http://www.netcommons.org/license.txt NetCommons License
+ * @copyright Copyright 2014, NetCommons Project
+ * @author Kohei Teraguchi <kteraguchi@netcommons.org>
+ * @since 3.0.0.0
+ * @link http://www.netcommons.org NetCommons Project
+ * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
 /**
@@ -52,7 +54,7 @@ class FramesLanguageFixture extends CakeTestFixture {
 			'id' => 2,
 			'frame_id' => 1,
 			'language_id' => 2,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'name' => 'Test frame name 1',
 			'created_user_id' => 2,
 			'created' => '2014-07-29 03:53:10',
 			'modified_user_id' => 2,
@@ -60,8 +62,8 @@ class FramesLanguageFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => 3,
-			'frame_id' => 3,
-			'language_id' => 3,
+			'frame_id' => 2,
+			'language_id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
 			'created_user_id' => 3,
 			'created' => '2014-07-29 03:53:10',
@@ -70,9 +72,9 @@ class FramesLanguageFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => 4,
-			'frame_id' => 4,
-			'language_id' => 4,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'frame_id' => 2,
+			'language_id' => 2,
+			'name' => 'Test frame name 2',
 			'created_user_id' => 4,
 			'created' => '2014-07-29 03:53:10',
 			'modified_user_id' => 4,
