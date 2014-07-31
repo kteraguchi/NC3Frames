@@ -29,6 +29,7 @@ class TestPluginController extends FramesController {
 	}
 
 }
+CakePlugin::load('TestPlugin', array('path' => 'test_plugin'));
 
 /**
  * Summary for FramesController Test Case
@@ -50,17 +51,6 @@ class FramesControllerTest extends ControllerTestCase {
 		'plugin.frames.language',
 		'plugin.frames.frames_language'
 	);
-
-/**
- * setUp
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->generate('Frames.Frames');
-		$this->controller->Frame = ClassRegistry::init('Frames.Frame');
-	}
 
 /**
  * Frame ID 1 assertions
