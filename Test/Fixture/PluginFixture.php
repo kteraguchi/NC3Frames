@@ -51,7 +51,7 @@ class PluginFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => 2,
-			'folder' => '',
+			'folder' => 'test_plugin',
 			'weight' => 2,
 			'type' => 2,
 			'created_user_id' => 2,
