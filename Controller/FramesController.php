@@ -5,8 +5,7 @@
  * @property Frame $Frame
  *
  * @copyright Copyright 2014, NetCommons Project
- * @author Kohei Teraguchi <kteraguchi@netcommons.org>
- * @since 3.0.0.0
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
@@ -30,7 +29,7 @@ class FramesController extends FramesAppController {
  * @return void
  */
 	public function index($id = null) {
-		$this->Frame->hasAndBelongsToMany['Language']['conditions'] = array('Language.code' => 'jpn');
+		$this->Frame->hasAndBelongsToMany['Language']['conditions'] = array('Language.code' => 'ja');
 		$frame = $this->Frame->findById($id);
 		if (empty($frame)) {
 			throw new NotFoundException();
@@ -55,28 +54,27 @@ class FramesController extends FramesAppController {
 			return;
 		}
 
-		$this->Frame->create();
-
-		$data['Frame'] = $this->request->data;
 		// テスト用データ
-		$data['Frame']['room_id'] = 1;
-		$data['Language'] = array(
-			array(
-				'id' => 1,
-				'FramesLanguage' => array(
-					'language_id' => 1,
-					'name' => 'Test' . date('Y/m/d H:i:s'),
-				),
-			),
-			array(
-				'id' => 2,
-				'FramesLanguage' => array(
-					'language_id' => 2,
-					'name' => 'テスト' . date('Y/m/d H:i:s'),
-				),
-			),
-		);
+		//$this->Frame->create();
+		//$data['Frame'] = array_merge(
+		//		$this->request->data,
+		//		array('room_id' => 1, 'language_id' => 1, 'name' => 'Test' . date('Y/m/d H:i:s'))
+		//	);
+		//if (!$this->Frame->save($data)) {
+		//	//エラー処理
+		//	return $this->render();
+		//}
 
+		$this->Frame->create();
+		$data['Frame'] = array_merge(
+				$this->request->data,
+				array(
+					'room_id' => 1,
+					'language_id' => 2,
+					'key' => hash('sha256', 'テスト' . date('Y/m/d H:i:s')),
+					'name' => 'テスト' . date('Y/m/d H:i:s'),
+				)
+			);
 		if (!$this->Frame->save($data)) {
 			//エラー処理
 			return $this->render();

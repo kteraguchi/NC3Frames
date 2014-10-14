@@ -3,8 +3,7 @@
  * LanguageFixture
  *
  * @copyright Copyright 2014, NetCommons Project
- * @author Kohei Teraguchi <kteraguchi@netcommons.org>
- * @since 3.0.0.0
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
@@ -42,7 +41,7 @@ class LanguageFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => '1',
-			'code' => 'eng',
+			'code' => 'en',
 			'weight' => '1',
 			'is_active' => 1,
 			'created_user_id' => null,
@@ -52,7 +51,7 @@ class LanguageFixture extends CakeTestFixture {
 		),
 		array(
 			'id' => '2',
-			'code' => 'jpn',
+			'code' => 'ja',
 			'weight' => '2',
 			'is_active' => 1,
 			'created_user_id' => null,

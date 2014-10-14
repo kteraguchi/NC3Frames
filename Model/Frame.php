@@ -10,8 +10,7 @@
  * @property Language $Language
  *
  * @copyright Copyright 2014, NetCommons Project
- * @author Kohei Teraguchi <kteraguchi@netcommons.org>
- * @since 3.0.0.0
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
@@ -40,7 +39,14 @@ class Frame extends FramesAppModel {
 		),
 		'Plugin' => array(
 			'className' => 'Plugin',
-			'foreignKey' => 'plugin_id',
+			'foreignKey' => false,
+			'conditions' => array('Frame.plugin_key = Plugin.key'),
+			'fields' => '',
+			'order' => ''
+		),
+		'Language' => array(
+			'className' => 'Language',
+			'foreignKey' => 'language_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -60,19 +66,6 @@ class Frame extends FramesAppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'Language' => array(
-			'className' => 'Language',
-			'joinTable' => 'frames_languages',
-			'foreignKey' => 'frame_id',
-			'associationForeignKey' => 'language_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-		)
 	);
 
 /**
@@ -87,7 +80,7 @@ class Frame extends FramesAppModel {
 			),
 			'Language' => array(
 				'conditions' => array(
-					'Language.code' => 'jpn'
+					'Language.code' => 'ja'
 				)
 			),
 			'Plugin'
