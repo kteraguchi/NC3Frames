@@ -1,43 +1,53 @@
 describe('frames', function() {
+  var $httpBackend, createController;
 
-  //load module
   beforeEach(module('NetCommonsApp'));
 
-  //controller
-  beforeEach(inject(function($controller) {
-    //spec body
-    scope = {};
-    var FramesController = $controller('FramesController', { $scope : $scope, $http : $http, dialogs : dialogs });
-    expect(PluginController).toBeDefined();
+  beforeEach(inject(function($injector) {
+    $httpBackend = $injector.get('$httpBackend');
+
+    var $controller = $injector.get('$controller');
+    $scope = {};
+    createController = function() {
+      return $controller('FramesController', {'$scope' : $scope});
+    };
+
   }));
 
-  //test
-  it('snapshot()', inject(function($controller) {
-    var noImagePath = '/pages/img/snapshot_noimage.png';
-    expect(scope.snapshot(text)).toBe(noImagePath);
+  afterEach(function() {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
 
-    var text = '';
-    expect(scope.snapshot(text)).toBe(noImagePath);
-
-    text = 'test.png';
-    expect(scope.snapshot(text)).toBe(text);
+  it('should be false deleted value', inject(function() {
+      var controller = createController();
+      expect($scope.deleted).toBe(false);
   }));
 
-  //test
-  it('showPluginList()', inject(function($controller) {
-    scope.showPluginList();
-    expect(ncPutBoxId).toBe(undefined);
+  it('should confirm frame delete', inject(function($injector) {
+    var dialogs = $injector.get('dialogs');
+    var modalInstance = {
+      result: {
+        then: function(confirmCallback) {
+            this.confirmCallBack = confirmCallback;
+        }
+      },
+      close: function( item ) {
+        this.result.confirmCallBack( item );
+      }
+    };
+    //dialogs.confirm(undefined, undefined);
 
-    var blockId = 123;
-    scope.showPluginList(blockId);
-    expect(ncPutBoxId).toBe(blockId);
+    spyOn(dialogs, 'confirm').andReturn(modalInstance);
+
+    $httpBackend.expectDELETE('/frames/frames/1').respond(200, '');
+
+    var controller = createController();
+    $scope.delete(1);
+    modalInstance.close('yes');
+
+    $httpBackend.flush();
+    expect($scope.deleted).toBe(true);
   }));
-
-  //test
-  //it('selectPlugin()', inject(function($controller, $log) {
-  //   submitのテスト
-  //   Protractorを使用したほうがよいのか？
-
-  //}));
 
 });

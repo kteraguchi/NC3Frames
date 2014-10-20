@@ -22,8 +22,8 @@ NetCommonsApp.controller('FramesController', function($scope, $http, dialogs) {
    * @return {void}
    */
   $scope.delete = function(frameId) {
-    message = 'Do you want to delete the frame?<br />' +
-              '(It should use defined language.)';
+    var message = 'Do you want to delete the frame?<br />' +
+                  '(It should use defined language.)';
     dialogs.confirm(undefined, message)
       .result.then(
         function(yes) {

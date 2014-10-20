@@ -23,12 +23,10 @@ class FramesControllerDeleteTest extends ControllerTestCase {
 	public $fixtures = array(
 		'plugin.frames.frame',
 		'plugin.frames.site_setting',
-		'plugin.frames.site_setting_value',
 		'plugin.frames.box',
 		'plugin.frames.plugin',
 		'plugin.frames.block',
 		'plugin.frames.language',
-		'plugin.frames.frames_language'
 	);
 
 /**

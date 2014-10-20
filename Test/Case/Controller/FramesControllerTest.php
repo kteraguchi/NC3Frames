@@ -125,7 +125,7 @@ class FramesControllerTest extends ControllerTestCase {
  */
 	public function testIndexSettingModeNoneContent() {
 		$this->testAction('/' . Page::SETTING_MODE_WORD . '/frames/frames/index/2', array('return' => 'view'));
-		$this->assertTextContains('<div id="frame-wrap-2" class="frame frame-id-2">', $this->view);
+		$this->assertTextContains('<div id="frame-wrap-2" class="frame frame-id-2"', $this->view);
 		$this->assertTextContains('<div class="block block-id-2">', $this->view);
 		$this->assertTextContains('Test frame name 2', $this->view);
 		$this->assertTextNotContains('TestPluginController_index_', $this->view);
@@ -153,8 +153,8 @@ class FramesControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAddGetMethod() {
+		$this->setExpectedException('MethodNotAllowedException');
 		$this->testAction('/frames/frames/add', array('method' => 'get'));
-		$this->assertEmpty($this->result);
 	}
 
 }

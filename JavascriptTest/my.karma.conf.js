@@ -23,7 +23,7 @@ module.exports = function(config) {
     files: [
       '../../NetCommons/webroot/angular/angular.js',
       '../../NetCommons/webroot/jquery/jquery.min.js',
-      '../../NetCommons/webroot/angular-bootstrap/ui-bootstrap.min.js',
+      '../../NetCommons/webroot/angular-bootstrap/ui-bootstrap.js',
       '../../NetCommons/webroot/base/js/base.js',
       '../../NetCommons/webroot/angular-ui-tinymce/src/tinymce.js',
       '../../../../vendors/bower_components/angular-mocks/angular-mocks.js',

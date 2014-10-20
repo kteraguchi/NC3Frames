@@ -29,7 +29,6 @@ class FramesController extends FramesAppController {
  * @return void
  */
 	public function index($id = null) {
-		$this->Frame->hasAndBelongsToMany['Language']['conditions'] = array('Language.code' => 'ja');
 		$frame = $this->Frame->findById($id);
 		if (empty($frame)) {
 			throw new NotFoundException();
@@ -40,7 +39,7 @@ class FramesController extends FramesAppController {
 		unset($frame['Plugin'], $frame['Language']);
 		$this->set('frames', array($frame['Frame']));
 
-		// It probably does'nt needs index.ctp, but lower readability.
+		// It probably doesn't needs index.ctp, but lower readability.
 		//$this->render('Frames.Elements/render_frames');
 	}
 
