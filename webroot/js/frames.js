@@ -27,7 +27,20 @@ NetCommonsApp.controller('FramesController', function($scope, $http, dialogs) {
     dialogs.confirm(undefined, message)
       .result.then(
         function(yes) {
-          $http.delete('/frames/frames/' + frameId.toString())
+          var url = '/frames/frames/' + frameId.toString();
+          var data = {
+            id:$('#frameForm' + frameId + ' input[name="data[id]"]').val(),
+            _Token:{
+              key:$('#frameForm' + frameId + ' input[name="data[_Token][key]"]').val(),
+              fields:$('#frameForm' + frameId + ' input[name="data[_Token][fields]"]').val(),
+              unlocked:$('#frameForm' + frameId + ' input[name="data[_Token][unlocked]"]').val()
+            }
+          };
+          var config = {
+            data:data,
+            headers: {"Content-Type": "application/json"}
+          };
+          $http.delete(url, config)
             .success(function(data, status, headers, config) {
                 $scope.deleted = true;
               })

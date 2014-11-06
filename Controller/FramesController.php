@@ -12,6 +12,12 @@
 
 App::uses('FramesAppController', 'Frames.Controller');
 
+/**
+ * Frames Controller
+ *
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Frames\Controller
+ */
 class FramesController extends FramesAppController {
 
 /**
@@ -20,6 +26,23 @@ class FramesController extends FramesAppController {
  * @var array
  */
 	public $uses = array('Frames.Frame');
+
+/**
+ * use component
+ *
+ * @var array
+ */
+	public $components = array(
+		'Security'
+	);
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+		if ($this->request->is('delete')) {
+			// When it is error, how does set once using token?
+			$_SERVER['REQUEST_METHOD'] = 'POST';
+		}
+	}
 
 /**
  * index method
@@ -54,30 +77,22 @@ class FramesController extends FramesAppController {
 		//}
 		$this->request->onlyAllow('post');
 
-		// テスト用データ
-		//$this->Frame->create();
-		//$data['Frame'] = array_merge(
-		//		$this->request->data,
-		//		array('room_id' => 1, 'language_id' => 1, 'name' => 'Test' . date('Y/m/d H:i:s'))
-		//	);
-		//if (!$this->Frame->save($data)) {
-		//	//エラー処理
-		//	return $this->render();
-		//}
-
 		$this->Frame->create();
+
+		// It should modify to use m17n on key and name
 		$data['Frame'] = array_merge(
-				$this->request->data,
-				array(
-					'room_id' => 1,
-					'language_id' => 2,
-					'key' => hash('sha256', 'テスト' . date('Y/m/d H:i:s')),
-					'name' => 'テスト' . date('Y/m/d H:i:s'),
-				)
-			);
-		if (!$this->Frame->save($data)) {
+			$this->request->data,
+			array(
+				'room_id' => 1,
+				'language_id' => 2,
+				'key' => hash('sha256', 'テスト' . date('Y/m/d H:i:s')),
+				'name' => 'テスト' . date('Y/m/d H:i:s'),
+			)
+		);
+
+		if (!$this->Frame->saveFrame($data)) {
 			//エラー処理
-			return $this->render();
+			return false;
 		}
 
 		$this->autoRender = false;
@@ -97,9 +112,9 @@ class FramesController extends FramesAppController {
 			throw new NotFoundException(__('Invalid frame'));
 		}
 
-		//$this->request->onlyAllow('post', 'delete');
-		$this->request->onlyAllow('delete');
-		if ($this->Frame->delete()) {
+		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('delete');
+		if ($this->Frame->deleteFrame()) {
 			return $this->flash(__('The frame has been deleted.'), array('action' => 'index'));
 		} else {
 			return $this->flash(__('The frame could not be deleted. Please, try again.'), array('action' => 'index'));

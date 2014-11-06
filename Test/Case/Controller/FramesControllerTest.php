@@ -12,9 +12,18 @@ App::uses('FramesController', 'Frames.Controller');
 
 /**
  * Plugin controller class for testAction
+ *
+ * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
+ * @package NetCommons\Frames\Test\Case\Controller
  */
 class TestPluginController extends FramesController {
 
+/**
+ * Set to true to automatically render the view
+ * after action logic.
+ *
+ * @var bool
+ */
 	public $autoRender = false;
 
 /**
@@ -30,7 +39,6 @@ class TestPluginController extends FramesController {
 
 		return 'TestPluginController_index_' . $id;
 	}
-
 }
 CakePlugin::load('TestPlugin', array('path' => 'test_plugin'));
 
@@ -50,8 +58,7 @@ class FramesControllerTest extends ControllerTestCase {
 		'plugin.frames.box',
 		'plugin.frames.plugin',
 		'plugin.frames.block',
-		'plugin.frames.language',
-		//'plugin.frames.frames_language'
+		'plugin.frames.language'
 	);
 
 /**
@@ -129,32 +136,6 @@ class FramesControllerTest extends ControllerTestCase {
 		$this->assertTextContains('<div class="block block-id-2">', $this->view);
 		$this->assertTextContains('Test frame name 2', $this->view);
 		$this->assertTextNotContains('TestPluginController_index_', $this->view);
-	}
-
-/**
- * testAdd method
- *
- * @return void
- */
-	public function testAdd() {
-		$options = array(
-			'data' => array(
-				'box_id' => '1',
-				'plugin_id' => '1'
-			)
-		);
-		$this->testAction('/frames/frames/add', $options);
-		$this->assertEmpty($this->result);
-	}
-
-/**
- * testAddGetMethod method
- *
- * @return void
- */
-	public function testAddGetMethod() {
-		$this->setExpectedException('MethodNotAllowedException');
-		$this->testAction('/frames/frames/add', array('method' => 'get'));
 	}
 
 }
